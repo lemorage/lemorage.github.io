@@ -1,0 +1,39 @@
+{
+  "name": "lemorage-culture-club",
+  "private": true,
+  "author": "lemorage <one.lemorage@gmail.com>",
+  "license": "BSD-2-Clause",
+  "version": "1.0.0",
+  "description": "Perfect blue",
+  "main": "index.js",
+  "repository": "https://github.com/lemorage/lemorage.github.io.git",
+  "scripts": {
+    "clean": "rimraf odyssey/.vuepress/.temp odyssey/.vuepress/.cache odyssey/.vuepress/dist",
+    "dev": "vuepress-cli dev odyssey --clean-cache",
+    "build": "pnpm clean && vuepress-cli build odyssey --clean-cache",
+    "serve": "serve odyssey/.vuepress/dist"
+  },
+  "devDependencies": {
+    "@vuepress/bundler-vite": "2.0.0-beta.49",
+    "@vuepress/cli": "2.0.0-beta.49",
+    "@vuepress/client": "2.0.0-beta.49",
+    "oh-vue-icons": "^1.0.0-rc3",
+    "sass-loader": "^13.0.2",
+    "serve": "^14.0.1",
+    "rimraf": "^3.0.2",
+    "vue": "^3.2.36",
+    "vuepress": "2.0.0-beta.49",
+    "vuepress-theme-gungnir": "2.0.0-alpha.26"
+  },
+  "engines": {
+    "node": ">=14",
+    "pnpm": ">=7"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "webpack"
+      ]
+    }
+  }
+}
