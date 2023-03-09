@@ -40,6 +40,6 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: /
+        publish_dir: odyssey/.vuepress/dist
         publish_branch: gh_pages
         full_commit_message: ${{ github.event.head_commit.message }}
