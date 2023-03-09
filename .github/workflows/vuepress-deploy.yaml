@@ -28,7 +28,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODE_VERSION }}
-        cache:n pnpm
+        cache: pnpm
 
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
@@ -41,4 +41,4 @@ jobs:
       env:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: dist/
-        cname: lemorage.github.io
+        publish_branch: gh_pages
