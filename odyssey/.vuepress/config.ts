@@ -1,12 +1,14 @@
 import { viteBundler } from "@vuepress/bundler-vite";
 import { defineUserConfig } from "vuepress";
+import { Page } from "@vuepress/core";
+import { searchPlugin } from "@vuepress/plugin-search";
 import { gungnirTheme } from "vuepress-theme-gungnir";
 
 const isProd = process.env.NODE_ENV === "production";
 
 export default defineUserConfig({
   title: "Lemorage",
-  description: "Hello World!",
+  description: "Oh My World!",
 
   head: [
     [
@@ -54,7 +56,7 @@ export default defineUserConfig({
     personalInfo: {
       name: "Lemorage",
       avatar: "https://www.gravatar.com/avatar/8eb73bbf5c825a52672914fa1959388d?d=identicon&s=256",
-      description: "Those with a lack of purpose fill the void with pleasure",
+      description: "Those with a lack of purpose fill the void with pleasure.",
       sns: {
         github: "lemorage",
         linkedin: "miao-z-40059721b",
@@ -110,9 +112,13 @@ export default defineUserConfig({
     },
 
     themePlugins: {
-      // only enable git plugin in production mode
+      // enable plugins
+      search: false,
       git: isProd,
       katex: true,
+      chartjs: {
+        token: "chart"
+      },
       giscus: {
         repo: "This-is-an-Apple/blog-giscus-comments",
         repoId: "R_kgDOGl2SjQ",
@@ -166,7 +172,6 @@ export default defineUserConfig({
       <a href="https://github.com/Renovamen/vuepress-theme-gungnir" target="_blank">Gungnir</a>
     `
   }),
-
   markdown: {
     headers: {
       level: [2, 3, 4, 5]
@@ -174,5 +179,16 @@ export default defineUserConfig({
     code: {
       lineNumbers: true
     }
-  }
+  },
+  plugins: [
+    searchPlugin({
+      locales: {
+        "/": {
+          placeholder: "Search",
+        }
+      },
+      maxSuggestions: 7,
+      isSearchable: (page: Page) => !["Logs", "Links", "Home"].includes(page.frontmatter.layout ? page.frontmatter.layout : "layout")
+    })
+  ]
 });
