@@ -1,7 +1,7 @@
 ---
 layout: Post
 title: LeetCode Biweekly Contest 99
-subtitle: My solution to this contest...
+subtitle: Review and summary
 author: Lemorage
 date: 2023-03-07
 useHeaderImage: true
@@ -134,7 +134,13 @@ Mathematical derivation.
 
 Take n = 3 as an example:
 - We can cut the original graph into a large square with a smaller square.
-- Or we can also cut the original graph into two same rectangles with a single cell. 
+![img1](https://assets.leetcode.com/users/images/16c708d1-14d2-4959-9b44-83f186c79c8e_1677945863.7645595.png)
+- Or we can also cut the original graph into two same rectangles with a single cell.
+![img2](https://assets.leetcode.com/users/images/fb1d9b7a-78e0-4237-907a-ba7f57177373_1677947477.5902114.png)
+
+::: warning NB
+Images originated from [@lee215](https://leetcode.com/lee215). Find more information at [here](https://leetcode.com/problems/count-total-number-of-colored-cells/solutions/3256196/java-c-python-cut-and-combine-o-1/?orderBy=most_votes)
+:::
 
 #### Complexity
 
@@ -144,7 +150,7 @@ Take n = 3 as an example:
 #### Code
 
 ```cpp
-long long coloredCells_1(int n) {
+long long coloredCells(int n) {
     return 1ll * n * n + 1ll * (n - 1) * (n - 1);
 }
 
@@ -154,3 +160,64 @@ long long coloredCells_2(int n) {
 ```
 
 
+
+## Q3 Count Ways to Group Overlapping Ranges
+
+### Solution 1
+
+#### Intuition
+
+Merge intervals.
+
+#### Approach
+
+According to the problem statement, if there are `n` ranges in total, our result is 2^n^ % (1e9 + 7).
+So the key point here is to find how many non-overlapping intervals are there.
+- Sort the given ranges by the left endpoint.
+- Initialize `left`, `right` to hold `INT_MIN`, which will hold the endpoint value of the previous range afterward.
+- There are only two cases when we iterate through all the ranges:
+    - If the left endpoint of the current range is greater than `left`, then we find a new non-overlapping range!
+    - Otherwise, we just extend the right endpoint of the current range if needed.
+
+
+#### Complexity
+
+- Time complexity: O(n log n)
+- Space complexity: O(n)
+    
+#### Code
+
+```cpp
+int countWays(vector<vector<int>>& ranges) {
+    sort(ranges.begin(), ranges.end());
+    int ans = 1, mod = 1e9 + 7;
+    function<int(int, int)> merge = [&](int l, int r)
+    {
+        for (auto seg : ranges)
+        {
+            if (r < seg[0])
+            {
+                if (l != -1) ans = ans * 2 % mod;
+                l = seg[0], r = seg[1];
+            } else r = max(r, seg[1]);
+        }
+        return ans * 2 % mod;
+    };
+    return merge(-1, -1);
+}
+
+int countWays_2(vector<vector<int>>& ranges) {
+    sort(ranges.begin(), ranges.end());
+    int r = -1, ans = 1, mod = 1e9 + 7;
+    for (auto seg : ranges)
+    {
+        if (r < seg[0]) ans = ans * 2 % mod;
+        r = max(r, seg[1]);
+    }
+    return ans;
+}
+```
+
+
+
+## Q4 Count Number of Possible Root Nodes (TBD...)
