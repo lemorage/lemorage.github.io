@@ -26,7 +26,7 @@ export default defineUserConfig({
         rel: "icon",
         type: "image/png",
         sizes: "32x32",
-        href: `/img/logo/favicon-32x32.png`
+        href: `/img/logo/favicon.ico`
       }
     ],
     ["meta", { name: "application-name", content: "Lemorage" }],
