@@ -3,10 +3,10 @@ layout: Post
 title: LeetCode Biweekly Contest 99
 subtitle: Review and summary
 author: Lemorage
-date: 2023-03-07
+date: 2023-03-11
 useHeaderImage: true
-headerImage: /img/in-post/leetcode/header.png
-headerMask: rgb(5, 18, 127, .5)
+headerImage: /img/in-post/leetcode/biweekly.png
+headerMask: rgb(128, 8, 27, .5)
 permalinkPattern: /post/:year/:month/:day/:slug/
 tags:
   - LeetCode
@@ -29,7 +29,7 @@ We can try all the possible ways of splitting the number into two parts, which c
 
  n is the number of digits.
 
-- Time complexity: O(2^n * n * n * log n)
+- Time complexity: O(2^n^ * n * n * log n)
 - Space complexity: O(n)
     
 #### Code
@@ -139,7 +139,7 @@ Take n = 3 as an example:
 ![img2](https://assets.leetcode.com/users/images/fb1d9b7a-78e0-4237-907a-ba7f57177373_1677947477.5902114.png)
 
 ::: warning NB
-Images originated from [@lee215](https://leetcode.com/lee215). Find more information at [here](https://leetcode.com/problems/count-total-number-of-colored-cells/solutions/3256196/java-c-python-cut-and-combine-o-1/?orderBy=most_votes)
+Images originated from [@lee215](https://leetcode.com/lee215). Credit goes to the original author. Please find more information at [here](https://leetcode.com/problems/count-total-number-of-colored-cells/solutions/3256196/java-c-python-cut-and-combine-o-1/?orderBy=most_votes)
 :::
 
 #### Complexity
