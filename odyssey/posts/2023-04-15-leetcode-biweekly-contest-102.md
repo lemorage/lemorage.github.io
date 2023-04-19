@@ -54,7 +54,6 @@ vector<int> findColumnWidth(vector<vector<int>>& grid) {
 
 #### Intuition
 
-# Intuition
 Prefix Sum with the track of current max value.
 - Normally we calculate prefix sum by `prefix_sum[i] = prefix_sum[i-1] + nums[i]`.
 - In this problem, we need to add an extra value `cur_max`, i.e. `prefix_sum[i] = prefix_sum[i-1] + nums[i] + cur_max`.
@@ -94,15 +93,15 @@ vector<long long> findPrefixScore(vector<int>& nums) {
 
 #### Intuition
 
-Double DFS.
+The key idea of this solution is to calculate the sum of values of all the cousins of a given node by subtracting the sum of values of its parent's children from the sum of values at the current level. We can use double DFS to traverse the binary tree.
+> In conclusion, to calculate the sum of values of all cousins for a given node, we can assume its parent to be `p` and apply the formula S~c~ = level_sum - p_children_sum.
 
 #### Approach
 
-- Two unordered maps `hash1` and `hash2` are defined to keep track of the sum of values of nodes at each depth and the sum of values of the child nodes of each parent node respectively.
+- We initialize two unordered maps to keep track of the sum of values of nodes at each depth and the sum of values of the child nodes of each parent node respectively.
 - A lambda function `dfs` is defined to traverse the tree in a depth-first search manner and update the values in the hash maps.
 - Another lambda function `solve` is defined to recursively traverse the tree and update the values of the nodes based on the values in the hash maps.
-- The `dfs` function is called with the root node and `nullptr` as the parent node to update the hash maps.
-- The `solve` function is called with the root node and `nullptr` as the parent node to update the values of the nodes in the tree.
+- The new value of each node is calculated as `level[depth] - hash[parent]`.
 - The updated root node is returned.
 
 #### Complexity
@@ -114,14 +113,14 @@ Double DFS.
 
 ```cpp
 TreeNode* replaceValueInTree(TreeNode* root) {
-    unordered_map<int, int> hash1;
-    unordered_map<TreeNode*, int> hash2;
+    unordered_map<int, int> level;
+    unordered_map<TreeNode*, int> hash;
 
     auto dfs = [&](auto&& dfs, auto node, auto parent, int depth)
     {
         if (!node) return;
-        hash1[depth] += node->val;
-        hash2[parent] += node->val;
+        level[depth] += node->val;
+        hash[parent] += node->val;
         dfs(dfs, node->left, node, depth + 1);
         dfs(dfs, node->right, node, depth + 1);
     };
@@ -129,13 +128,64 @@ TreeNode* replaceValueInTree(TreeNode* root) {
     auto solve = [&](auto&& self, TreeNode*& root, auto parent, int depth)
     {
         if (!root) return;
-        root->val = hash1[depth] - hash2[parent];
+        root->val = level[depth] - hash[parent];
         self(self, root->left, root, depth + 1);
         self(self, root->right, root, depth + 1);
     };
     
     dfs(dfs, root, nullptr, 0);
     solve(solve, root, nullptr, 0);
+    return root;
+}
+```
+
+### Solution 2
+
+#### Intuition
+
+We can also use BFS to perform level-order traversal for solving this problem.
+
+#### Approach
+
+- We create a queue to perform level-order traversal of the binary tree.
+- While the queue is not empty:
+    - Get the number of nodes at the current level and initialize a variable to track the total sum of values of child nodes.
+    - Update the values of the child nodes based on the total sum and the values of their siblings.
+- Repeat the above steps for each level in the tree.
+- Return the root node after updating the values of all nodes in the tree.
+
+#### Complexity
+
+- Time complexity: O(n)
+- Space complexity: O(w), `w` is the maximum width of the binary tree.
+    
+#### Code
+
+```cpp
+TreeNode* replaceValueInTree(TreeNode* root) {
+    root->val = 0;
+    queue<TreeNode*> q{{root}};
+
+    while (!q.empty())
+    {
+        int n = q.size(), total = 0;
+        vector<TreeNode*> level;
+        for (int i = 0; i < n; ++i)
+        {
+            auto t = q.front(); q.pop();
+            if (t->left) q.push(t->left), total += t->left->val;
+            if (t->right) q.push(t->right), total += t->right->val;
+            level.push_back(t);
+        }
+
+        for (auto& x : level)
+        {
+            int sum = total - (x->left ? x->left->val : 0) - (x->right ? x->right->val : 0);
+            if (x->left) x->left->val = sum;
+            if (x->right) x->right->val = sum;
+        }
+    }
+
     return root;
 }
 ```
