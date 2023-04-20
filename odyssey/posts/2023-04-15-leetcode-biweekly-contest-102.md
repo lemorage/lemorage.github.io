@@ -198,11 +198,13 @@ TreeNode* replaceValueInTree(TreeNode* root) {
 
 #### Intuition
 
-Dijkstra.
+Plain Dijkstra.
+- Instead of using a priority queue, this way of dijkstra uses a simple linear search to find the next unvisited node with the minimum distance.
+- The reason for using a linear search instead of a heap is that the graph is dense. In this case, the overhead of maintaining a heap may be larger than the benefit of using it. Linear search also simplifies the implementation and can be faster for small graphs.
 
 #### Approach
 
-Dijkstra's algorithm works by maintaining a set of visited nodes and a priority queue of nodes to visit. The priority queue is sorted based on the distance from the starting node. The algorithm repeatedly extracts the node with the smallest distance from the priority queue and relaxes all its neighbors, updating their distances if a shorter path is found. This continues until the destination node is visited or the priority queue is empty.
+The implementation starts by initializing the distance of all nodes from the starting node to infinity (represented by 0x3f3f3f3f), except for the starting node itself which has a distance of 0. Then, it iterates through all nodes, selecting the unvisited node with the smallest distance as the next node to visit. It marks the selected node as visited and updates the distance of its unvisited neighbors if a shorter path is found. Finally, the algorithm returns the distance of the target node if there is a path or -1 if there is no path.
 
 #### Complexity
 
@@ -216,42 +218,108 @@ The time complexity of computing the shortest path is O(n^2^ + m). The space com
 ```cpp
 class Graph {
 public:
-    vector<vector<pair<int, int>>> adj;
+    vector<vector<int>> g;
     Graph(int n, vector<vector<int>>& edges) {
-        adj.resize(n);
-        for (auto& e: edges)
-            adj[e[0]].emplace_back(e[1], e[2]);
+        g = vector<vector<int>>(n, vector<int>(n, 0x3f3f3f3f));
+        for (auto &e: edges)
+            g[e[0]][e[1]] = e[2];
     }
 
     void addEdge(vector<int> e) {
-        adj[e[0]].emplace_back(e[1], e[2]);
+        g[e[0]][e[1]] = e[2];
     }
 
     int shortestPath(int node1, int node2) {
-        int n = adj.size();
+        int n = g.size();
         vector<int> dist(n, 0x3f3f3f3f);
         vector<bool> st(n);
         dist[node1] = 0;
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < n; ++i)
+        {
             int t = -1;
-            for (int j = 0; j < n; ++j) {
-                if (!st[j] && (t == -1 || dist[t] > dist[j])) {
+            for (int j = 0; j < n; ++j)
+                if (!st[j] && (t == -1 || dist[t] > dist[j]))
                     t = j;
-                }
-            }
             st[t] = true;
 
-            for (auto& neighbor : adj[t]) {
-                int v = neighbor.first;
-                int w = neighbor.second;
-                dist[v] = min(dist[v], dist[t] + w);
+            for (int j = 0; j < n; ++j)
+                dist[j] = min(dist[j], dist[t] + g[t][j]);
+        }
+
+        if (dist[node2] == 0x3f3f3f3f) return -1;
+        return dist[node2];
+    }
+};
+```
+
+### Solution 2
+
+#### Intuition
+
+Heap-optimized Dijkstra.
+- The implementation use a priority queue to optimize the search time of finding the next unvisited node with the minimum distance.
+
+#### Approach
+
+Dijkstra's algorithm works by maintaining a set of visited nodes and a priority queue of nodes to visit. The priority queue is sorted based on the distance from the starting node. The algorithm repeatedly extracts the node with the smallest distance from the priority queue and relaxes all its neighbors, updating their distances if a shorter path is found. This continues until the destination node is visited or the priority queue is empty.
+
+#### Complexity
+
+n is the number of nodes and m is the number of edges.
+
+The time complexity of adding an edge is O(1), and the space complexity is O(m).
+The time complexity of computing the shortest path is O(m * log n). The space complexity is O(n) to store the distance array and visited set.
+    
+#### Code
+```cpp
+class Graph {
+public:
+    vector<vector<pair<int, int>>> edges;
+    vector<int> head;
+    int n, m;
+    
+    Graph(int n, vector<vector<int>>& edge) {
+        this->n = n;
+        edges.resize(n);
+        head.resize(n, -1);
+        for (auto& e: edge)
+        {
+            edges[e[0]].emplace_back(e[1], e[2]);
+            head[e[0]] = edges[e[0]].size() - 1;
+        }
+    }
+
+    void addEdge(vector<int> e) {
+        edges[e[0]].emplace_back(e[1], e[2]);
+        head[e[0]] = edges[e[0]].size() - 1;
+    }
+
+    int shortestPath(int node1, int node2) {
+        vector<int> dist(n);
+        memset(&dist[0], 0x3f, n * sizeof(int));
+        vector<bool> st(n, false);
+        dist[node1] = 0;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> heap;
+        heap.emplace(0, node1);
+
+        while (!heap.empty())
+        {
+            auto [d, u] = heap.top(); heap.pop();
+            if (st[u]) continue;
+            st[u] = true;
+            for (auto& edge : edges[u])
+            {
+                auto [v, w] = edge;
+                if (dist[v] > dist[u] + w)
+                {
+                    dist[v] = dist[u] + w;
+                    heap.emplace(dist[v], v);
+                }
             }
         }
 
-        if (dist[node2] == 0x3f3f3f3f) {
-            return -1;
-        }
+        if (dist[node2] == 0x3f3f3f3f) return -1;
         return dist[node2];
     }
 };
