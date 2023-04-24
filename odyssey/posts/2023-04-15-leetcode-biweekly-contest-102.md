@@ -204,13 +204,14 @@ Plain Dijkstra.
 
 #### Approach
 
-The implementation starts by initializing the distance of all nodes from the starting node to infinity (represented by 0x3f3f3f3f), except for the starting node itself which has a distance of 0. Then, it iterates through all nodes, selecting the unvisited node with the smallest distance as the next node to visit. It marks the selected node as visited and updates the distance of its unvisited neighbors if a shorter path is found. Finally, the algorithm returns the distance of the target node if there is a path or -1 if there is no path.
+This graph is represented by **adjacency matrix**.\
+The implementation starts by initializing the distance of all nodes from the starting node to infinity (represented by `0x3f3f3f3f`), except for the starting node itself which has a distance of 0. Then, it iterates through all nodes, selecting the unvisited node with the smallest distance as the next node to visit. It marks the selected node as visited and updates the distance of its unvisited neighbors if a shorter path is found. Finally, the algorithm returns the distance of the target node if there is a path or -1 if there is no path.
 
 #### Complexity
 
 n is the number of nodes and m is the number of edges.
 
-The time complexity of adding an edge is O(1), and the space complexity is O(m).
+The time complexity of adding an edge is O(1), and the space complexity is O(m).\
 The time complexity of computing the shortest path is O(n^2^ + m). The space complexity is O(n) to store the distance array and visited set.
     
 #### Code
@@ -218,9 +219,11 @@ The time complexity of computing the shortest path is O(n^2^ + m). The space com
 ```cpp
 class Graph {
 public:
+    const int INF = 0x3f3f3f3f;
     vector<vector<int>> g;
+
     Graph(int n, vector<vector<int>>& edges) {
-        g = vector<vector<int>>(n, vector<int>(n, 0x3f3f3f3f));
+        g = vector<vector<int>>(n, vector<int>(n, INF));
         for (auto &e: edges)
             g[e[0]][e[1]] = e[2];
     }
@@ -231,7 +234,7 @@ public:
 
     int shortestPath(int node1, int node2) {
         int n = g.size();
-        vector<int> dist(n, 0x3f3f3f3f);
+        vector<int> dist(n, INF);
         vector<bool> st(n);
         dist[node1] = 0;
 
@@ -247,8 +250,7 @@ public:
                 dist[j] = min(dist[j], dist[t] + g[t][j]);
         }
 
-        if (dist[node2] == 0x3f3f3f3f) return -1;
-        return dist[node2];
+        return dist[node2] == INF ? -1 : dist[node2];
     }
 };
 ```
@@ -257,51 +259,43 @@ public:
 
 #### Intuition
 
-Heap-optimized Dijkstra.
-- The implementation use a priority queue to optimize the search time of finding the next unvisited node with the minimum distance.
+The approach taken in Solution 2 is also based on Dijkstra's algorithm. However, it uses a priority queue to optimize the search time of finding the next unvisited node with the minimum distance.
 
 #### Approach
 
-Dijkstra's algorithm works by maintaining a set of visited nodes and a priority queue of nodes to visit. The priority queue is sorted based on the distance from the starting node. The algorithm repeatedly extracts the node with the smallest distance from the priority queue and relaxes all its neighbors, updating their distances if a shorter path is found. This continues until the destination node is visited or the priority queue is empty.
+This graph is represented by **adjacency list**.\
+This algorithm works by maintaining a set of visited nodes and a priority queue of nodes to visit. The priority queue is sorted based on the distance from the starting node. The algorithm repeatedly extracts the node with the smallest distance from the priority queue and relaxes all its neighbors, updating their distances if a shorter path is found. This continues until the destination node is visited or the priority queue is empty.
 
 #### Complexity
 
 n is the number of nodes and m is the number of edges.
 
-The time complexity of adding an edge is O(1), and the space complexity is O(m).
+The time complexity of adding an edge is O(1), and the space complexity is O(m).\
 The time complexity of computing the shortest path is O(m * log n). The space complexity is O(n) to store the distance array and visited set.
     
 #### Code
 ```cpp
 class Graph {
 public:
-    vector<vector<pair<int, int>>> edges;
-    vector<int> head;
-    int n, m;
+    vector<vector<pair<int, int>>> adj;
     
     Graph(int n, vector<vector<int>>& edge) {
-        this->n = n;
-        edges.resize(n);
-        head.resize(n, -1);
+        adj.resize(n);
         for (auto& e: edge)
-        {
-            edges[e[0]].emplace_back(e[1], e[2]);
-            head[e[0]] = edges[e[0]].size() - 1;
-        }
+            adj[e[0]].emplace_back(e[1], e[2]);
     }
 
     void addEdge(vector<int> e) {
-        edges[e[0]].emplace_back(e[1], e[2]);
-        head[e[0]] = edges[e[0]].size() - 1;
+        adj[e[0]].emplace_back(e[1], e[2]);
     }
 
     int shortestPath(int node1, int node2) {
         vector<int> dist(n);
         memset(&dist[0], 0x3f, n * sizeof(int));
-        vector<bool> st(n, false);
-        dist[node1] = 0;
+        vector<bool> st(n);
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> heap;
         heap.emplace(0, node1);
+        dist[node1] = 0;
 
         while (!heap.empty())
         {
@@ -321,6 +315,133 @@ public:
 
         if (dist[node2] == 0x3f3f3f3f) return -1;
         return dist[node2];
+    }
+};
+```
+
+### Solution 3
+
+#### Intuition
+
+Shortest Path Faster Algorithm (SPFA).
+- SPFA is an improvement over Dijkstra's algorithm that uses a queue to optimize the search time of finding the next unvisited node with the minimum distance.
+- It is similar to Dijkstra's algorithm, but instead of always selecting the node with the smallest distance, SPFA maintains a queue of nodes to visit, and it only adds a node to the queue if its distance is updated.
+
+#### Approach
+
+This graph is represented by **forward star edge list**.\
+The implementation starts by initializing the distance of all nodes from the starting node to infinity (represented by `0x3f3f3f3f`), except for the starting node itself which has a distance of 0. Then, it uses a queue to maintain the nodes to visit, initially adding the starting node to the queue. It repeatedly dequeues a node from the queue, relaxes its neighbors by updating their distances if a shorter path is found, and enqueues them if their distances are updated. This process continues until the queue is empty, which means all nodes have been visited. Finally, the algorithm returns the distance of the target node if there is a path or -1 if there is no path.
+
+#### Complexity
+
+n is the number of nodes and m is the number of edges.
+
+The time complexity of adding an edge is O(1), and the space complexity is O(m).\
+The time complexity of computing the shortest path is O(n * m), but it can be optimized to O(k * m) on average, where k is the average number of edges per node. The space complexity is O(n) to store the distance array and visited set, and O(n) for the queue.
+    
+#### Code
+```cpp
+class Graph {
+public:
+    static const int N = 100, M = 10000;
+    int head[N], e[M], ne[M], w[M], idx;
+    int dist[N];
+    bool st[N];
+    
+    Graph(int n, vector<vector<int>>& edges) {
+        memset(head, -1, sizeof head);
+        for (auto& e: edges)
+            addEdge(e);
+    }
+
+    void addEdge(vector<int> edge) {
+        int a = edge[0], b = edge[1], c = edge[2];
+        e[idx] = b, w[idx] = c, ne[idx] = head[a], head[a] = idx++;
+    }
+
+    int shortestPath(int node1, int node2) {
+        memset(dist, 0x3f, sizeof dist);
+        memset(st, false, sizeof st);
+        queue<int> q;
+        q.push(node1);
+        dist[node1] = 0;    
+        st[node1] = true;
+
+        while (!q.empty())
+        {
+            int t = q.front();
+            q.pop();
+
+            st[t] = false;
+
+            for (int i = head[t]; ~i; i = ne[i])
+            {
+                int j = e[i];
+                if (dist[j] > dist[t] + w[i])
+                {
+                    dist[j] = dist[t] + w[i];
+                    if (!st[j]) q.push(j), st[j] = true;
+                }
+            }
+        }
+
+        if (dist[node2] == 0x3f3f3f3f) return -1;
+        return dist[node2];
+    }
+};
+```
+
+### Solution 4
+
+#### Intuition
+
+Floyd-Warshall algorithm. The algorithm uses dynamic programming to find the shortest path between all pairs of nodes in a weighted graph.
+
+#### Approach
+
+This graph is represented by **adjacency matrix**.\
+The graph is represented as an adjacency matrix in the form of a two-dimensional vector `d` of size `n x n`. The constructor of the Graph class initializes the distance between each node to `0x3f3f3f3f` (which is a large value used to represent infinity). Then, the edges are added to the d matrix. The addEdge function updates the distance between nodes `a` and `b` with weight `w`. If the current distance is greater than the new distance, the shortest path between all pairs of nodes is recomputed using the Floyd algorithm. The shortestPath function returns the shortest path between node1 and node2.
+
+#### Complexity
+
+n is the number of nodes and m is the number of edges.
+
+The time complexity of adding an edge is O(n^2^), and the space complexity is O(m).\
+The time complexity of computing the shortest path is O(n^3^). The space complexity is O(n^2^) to store the distance matrix.
+    
+#### Code
+```cpp
+class Graph {
+public:
+    vector<vector<int>> d;
+    Graph(int n, vector<vector<int>>& edges) {
+        d = vector(n, vector<int>(n, 0x3f3f3f3f));
+        for (int i = 0; i < n; i++)
+            d[i][i] = 0;
+        for (auto& e : edges)
+            d[e[0]][e[1]] = e[2];
+        floyd(n);
+    }
+    
+    void addEdge(vector<int> edge) {
+        int a = edge[0], b = edge[1], w = edge[2];
+        if (d[a][b] > w)
+            for (int i = 0; i < d.size(); i++)
+                for (int j = 0; j < d.size(); j++)
+                    d[i][j] = min(d[i][j], d[i][a] + w + d[b][j]);
+    }
+
+    int shortestPath(int node1, int node2) {
+        return d[node1][node2] == 0x3f3f3f3f ? -1 : d[node1][node2];
+    }
+    
+private:
+    void floyd(int n)
+    {
+        for (int k = 0; k < n; k++)
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
     }
 };
 ```
