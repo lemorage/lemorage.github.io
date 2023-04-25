@@ -32,8 +32,8 @@ Brute-force.
 
 #### Complexity
 
-- Time complexity: O(money / 7)
-- Space complexity: O(1)
+- Time complexity: $O(money / 7)$
+- Space complexity: $O(1)$
     
 #### Code
 
@@ -80,8 +80,8 @@ Use two pointers after sorting.
 
 #### Complexity
 
-- Time complexity: O(n log n)
-- Space complexity: O(1)
+- Time complexity: $O(n \log n)$
+- Space complexity: $O(1)$
     
 #### Code
 
@@ -114,8 +114,8 @@ This solution is inspired by the brilliant idea of [@lee215](https://leetcode.co
 
 #### Complexity
 
-- Time complexity: O(n)
-- Space complexity: O(n)
+- Time complexity: $O(n)$
+- Space complexity: $O(n)$
 
 #### Code
 
@@ -148,8 +148,8 @@ Simulation.
 
 #### Complexity
 
-- Time complexity: O(n log n)
-- Space complexity: O(n)
+- Time complexity: $O(n \log n)$
+- Space complexity: $O(n)$
     
 #### Code
 
@@ -205,8 +205,8 @@ long long r = pow(cars, 2) * ranks[0];
 
 N is the maximum rank in the input array `ranks`.
 
-- Time complexity: O(cars * log(N))
-- Space complexity: O(1)
+- Time complexity: $O(cars * log(N))$
+- Space complexity: $O(1)$
     
 #### Code
 

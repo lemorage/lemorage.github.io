@@ -29,8 +29,8 @@ We can try all the possible ways of splitting the number into two parts, which c
 
  n is the number of digits.
 
-- Time complexity: O(2^n^ * n * n * log n)
-- Space complexity: O(n)
+- Time complexity: $O(2^n * n^2 \log n)$
+- Space complexity: $O(n)$
     
 #### Code
 
@@ -69,8 +69,8 @@ We can sort all digits, and split the digits into two substrings by taking every
 
  n is the number of digits.
 
-- Time complexity: O(n log n)
-- Space complexity: O(n)
+- Time complexity: $O(n \log n)$
+- Space complexity: $O(n)$
 
 #### Code
 
@@ -110,8 +110,8 @@ We can observe the pattern following the iteration...
 
 #### Complexity
 
-- Time complexity: O(n)
-- Space complexity: O(1)
+- Time complexity: $O(n)$
+- Space complexity: $O(1)$
     
 #### Code
 
@@ -144,8 +144,8 @@ Images originated from [@lee215](https://leetcode.com/lee215). Credit goes to th
 
 #### Complexity
 
-- Time complexity: O(1)
-- Space complexity: O(1)
+- Time complexity: $O(1)$
+- Space complexity: $O(1)$
 
 #### Code
 
@@ -182,8 +182,8 @@ So the key point here is to find how many non-overlapping intervals are there.
 
 #### Complexity
 
-- Time complexity: O(n log n)
-- Space complexity: O(n)
+- Time complexity: $O(n \log n)$
+- Space complexity: $O(n)$
     
 #### Code
 

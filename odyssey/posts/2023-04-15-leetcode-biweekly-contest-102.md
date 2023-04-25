@@ -26,12 +26,12 @@ Brute-force.
 - Iterate through each column of the grid.
 - For each column, iterate through each row and calculate the length of the string representation of the number at the current row and column using the `to_string` function.
 > Note: `s.size()` returns an `std::size_t`, which is an unsigned integer type. So we need to cast its type.
-- Compare this length with the current maximum length stored in ans[j], and update ans[j] if necessary.
+- Compare this length with the current maximum length stored in `ans[j]`, and update `ans[j]` if necessary.
 
 #### Complexity
 
-- Time complexity: O(n^2)
-- Space complexity: O(n)
+- Time complexity: $O(n^2)$
+- Space complexity: $O(n)$
     
 #### Code
 
@@ -67,8 +67,8 @@ Iterate through the input array and for each element:
 
 #### Complexity
 
-- Time complexity: O(n)
-- Space complexity: O(n)
+- Time complexity: $O(n)$
+- Space complexity: $O(n)$
     
 #### Code
 
@@ -106,8 +106,8 @@ The key idea of this solution is to calculate the sum of values of all the cousi
 
 #### Complexity
 
-- Time complexity: O(n)
-- Space complexity: O(n)
+- Time complexity: $O(n)$
+- Space complexity: $O(n)$
     
 #### Code
 
@@ -156,8 +156,10 @@ We can also use BFS to perform level-order traversal for solving this problem.
 
 #### Complexity
 
-- Time complexity: O(n)
-- Space complexity: O(w), `w` is the maximum width of the binary tree.
+w is the maximum width of the binary tree.
+
+- Time complexity: $O(n)$
+- Space complexity: $O(w)$
     
 #### Code
 
@@ -211,8 +213,8 @@ The implementation starts by initializing the distance of all nodes from the sta
 
 n is the number of nodes and m is the number of edges.
 
-The time complexity of adding an edge is O(1), and the space complexity is O(m).\
-The time complexity of computing the shortest path is O(n^2^ + m). The space complexity is O(n) to store the distance array and visited set.
+The time complexity of adding an edge is $O(1)$, and the space complexity is $O(m)$.\
+The time complexity of computing the shortest path is $O(n^2 + m)$. The space complexity is $O(n)$ to store the distance array and visited set.
     
 #### Code
 
@@ -270,8 +272,8 @@ This algorithm works by maintaining a set of visited nodes and a priority queue 
 
 n is the number of nodes and m is the number of edges.
 
-The time complexity of adding an edge is O(1), and the space complexity is O(m).\
-The time complexity of computing the shortest path is O(m * log n). The space complexity is O(n) to store the distance array and visited set.
+The time complexity of adding an edge is $O(1)$, and the space complexity is $O(m)$.\
+The time complexity of computing the shortest path is $O(m \log n)$. The space complexity is $O(n)$ to store the distance array and visited set.
     
 #### Code
 ```cpp
@@ -336,8 +338,8 @@ The implementation starts by initializing the distance of all nodes from the sta
 
 n is the number of nodes and m is the number of edges.
 
-The time complexity of adding an edge is O(1), and the space complexity is O(m).\
-The time complexity of computing the shortest path is O(n * m), but it can be optimized to O(k * m) on average, where k is the average number of edges per node. The space complexity is O(n) to store the distance array and visited set, and O(n) for the queue.
+The time complexity of adding an edge is $O(1)$, and the space complexity is $O(m)$.\
+The time complexity of computing the shortest path is $O(n * m)$, but it can be optimized to $O(k * m)$ on average, where k is the average number of edges per node. The space complexity is $O(n)$ to store the distance array and visited set, and $O(n)$ for the queue.
     
 #### Code
 ```cpp
@@ -406,8 +408,8 @@ The graph is represented as an adjacency matrix in the form of a two-dimensional
 
 n is the number of nodes and m is the number of edges.
 
-The time complexity of adding an edge is O(n^2^), and the space complexity is O(m).\
-The time complexity of computing the shortest path is O(n^3^). The space complexity is O(n^2^) to store the distance matrix.
+The time complexity of adding an edge is $O(n^2)$, and the space complexity is $O(m)$.\
+The time complexity of computing the shortest path is $O(n^3)$. The space complexity is $O(n^2)$ to store the distance matrix.
     
 #### Code
 ```cpp

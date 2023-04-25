@@ -29,8 +29,8 @@ Suppose `i=3` and `mask1` initially has all bits set to zero. With `mask1 |= 1 <
 
 #### Complexity
 
-- Time complexity: O(n)
-- Space complexity: O(1)
+- Time complexity: $O(n)$
+- Space complexity: $O(1)$
     
 #### Code
 
@@ -71,8 +71,8 @@ We can start by counting the frequency of each digit in both arrays.
 
 #### Complexity
 
-- Time complexity: O(n)
-- Space complexity: O(1)
+- Time complexity: $O(n)$
+- Space complexity: $O(1)$
     
 #### Code
 
@@ -134,8 +134,10 @@ def max_subarray_sum(arr):
 
 #### Complexity
 
-- Time complexity: O(n)
-- Space complexity: O(1)
+k is the number of characters in the input vector `vals`.
+
+- Time complexity: $O(n)$
+- Space complexity: $O(k)$
     
 #### Code
 
@@ -179,8 +181,8 @@ Find median of each GCD-defined subarray.
 
 #### Complexity
 
-- Time complexity: O(n log k)
-- Space complexity: O(n)
+- Time complexity: $O(n \log k)$
+- Space complexity: $O(n)$
     
 #### Code
 
@@ -255,8 +257,8 @@ Therefore, we have found a cycle of length 2 * dist[j] + d + 1. Since we are upd
 
 n is the number of vertices and m is the number of edges in the graph.
 
-- Time complexity: O(n(m + n))
-- Space complexity: O(m + n)
+- Time complexity: $O(n(m + n))$
+- Space complexity: $O(m + n)$
     
 #### Code
 
