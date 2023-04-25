@@ -1,1 +1,0 @@
-const t=JSON.parse('{"key":"v-3387f17a","path":"/tags/atcoder/","title":"AtCoder | Tags","lang":"en-US","frontmatter":{"title":"AtCoder | Tags","layout":"Tags","blog":{"type":"category","name":"AtCoder","key":"tag"}},"excerpt":"","headers":[],"git":{},"filePathRelative":null}');export{t as data};
