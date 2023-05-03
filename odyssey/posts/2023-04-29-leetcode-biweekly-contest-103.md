@@ -141,7 +141,37 @@ int findMaxFish(vector<vector<int>>& grid) {
 
 ## Q4 Make Array Empty
 
-### Solution 1
+### Solution 1 [TBD...]
+
+#### Intuition
+
+Count rotations.
+
+#### Approach
+
+
+
+#### Complexity
+
+
+    
+#### Code
+```cpp
+long long countOperationsToEmptyArray(vector<int>& nums) {
+    int n = nums.size(), p = 0;
+    long long res = n;
+    unordered_map<int, int> hash;
+    for (int i = 0; i < nums.size(); ++i)
+        hash[nums[i]] = i;
+    
+    sort(nums.begin(), nums.end());
+    for (int i = 0; i < nums.size(); p = hash[nums[i++]])
+        if (p > hash[nums[i]]) res += n - i;
+    return res;
+}
+```
+
+### Solution 2 [TBD...]
 
 #### Intuition
 
@@ -179,57 +209,5 @@ public:
 
         int query(int left, int right) { return sum(right) - sum(left - 1); }
     }BIT;
-
-    long long countOperationsToEmptyArray(vector<int> &nums) {
-        int n = nums.size(), id[n];
-        iota(id, id + n, 0);
-        sort(id, id + n, [&](int i, int j) {
-            return nums[i] < nums[j];
-        });
-
-        long long ans = n;
-        fenwick_tree t(n + 1);
-        int pre = 1;
-        for (int k = 0; k < n; ++k) {
-            int i = id[k] + 1;
-            if (i >= pre)
-                ans += i - pre - t.query(pre, i);
-            else
-                ans += n - pre + i - k + t.query(i, pre - 1);
-            t.add(i, 1);
-            pre = i;
-        }
-        return ans;
-    }
 };
-```
-
-### Solution 2
-
-#### Intuition
-
-Count rotations.
-
-#### Approach
-
-
-
-#### Complexity
-
-
-    
-#### Code
-```cpp
-long long countOperationsToEmptyArray(vector<int>& nums) {
-    int n = nums.size(), p = 0;
-    long long res = n;
-    unordered_map<int, int> hash;
-    for (int i = 0; i < nums.size(); ++i)
-        hash[nums[i]] = i;
-    
-    sort(nums.begin(), nums.end());
-    for (int i = 0; i < nums.size(); p = hash[nums[i++]])
-        if (p > hash[nums[i]]) res += n - i;
-    return res;
-}
 ```
