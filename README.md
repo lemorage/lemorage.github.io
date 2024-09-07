@@ -1,1 +1,1 @@
-This is the documentation of my personal website written in Go.
+This is the documentation of my personal website written in Rust.

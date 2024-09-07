@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Homepage</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <img src="{{ avatar_url }}" alt="Profile Picture" style="border-radius: 50%; width: 150px;">
+        <h1>{{ name }}</h1>
+        <p>{{ description | safe }}</p>        
+        <div style="margin: 20px;">
+            <a href="{{ blog_url }}">Blog</a> |
+            <a href="{{ portfolio_url }}">Portfolio</a> |
+            <a href="{{ contact_url }}">Contact</a>
+        </div>
+    </div>
+</body>
+</html>
+
