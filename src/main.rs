@@ -6,6 +6,10 @@ async fn index(tmpl: web::Data<Tera>) -> Result<HttpResponse> {
     let mut ctx = Context::new();
     ctx.insert(
         "avatar_url",
+        "https://gravatar.com/avatar/f596c7140610305ef8414aa73c7a1db3?size=256&cache=1725778928828",
+    );
+    ctx.insert(
+        "hover_avatar_url",
         "https://gravatar.com/userimage/215159183/321f49eca2a5a689000be949787e1e45.jpeg?size=256",
     );
     ctx.insert("name", "Glenn Miao");

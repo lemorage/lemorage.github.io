@@ -8,7 +8,10 @@
 </head>
 <body>
   <div class="container">
-    <img src="{{ avatar_url }}" alt="Profile Picture" class="avatar">
+    <div class="avatar">
+      <img src="{{ avatar_url }}" alt="Main Profile Picture" class="front">
+      <img src="{{ hover_avatar_url }}" alt="Virtual Profile Picture" class="back">
+    </div>
       <h1>{{ name }}</h1>
       <p>{{ description | safe }}</p> 
       <div class="links">
