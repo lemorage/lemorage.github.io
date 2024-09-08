@@ -19,7 +19,6 @@ async fn index(tmpl: web::Data<Tera>) -> Result<HttpResponse> {
     );
     ctx.insert("blog_url", "#");
     ctx.insert("portfolio_url", "#");
-    ctx.insert("contact_url", "#");
 
     let rendered = tmpl
         .render("index.html", &ctx)
