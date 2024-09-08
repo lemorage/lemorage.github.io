@@ -4,7 +4,10 @@ use tera::{Context, Tera};
 
 async fn index(tmpl: web::Data<Tera>) -> Result<HttpResponse> {
     let mut ctx = Context::new();
-    ctx.insert("avatar_url", "https://gravatar.com/avatar/460cd9f43cc848b0da104aaae7d6e1e73b9c6f7f896c67e1e8e906ba2ec66e02");
+    ctx.insert(
+        "avatar_url",
+        "https://gravatar.com/userimage/215159183/321f49eca2a5a689000be949787e1e45.jpeg?size=256",
+    );
     ctx.insert("name", "Glenn Miao");
     ctx.insert(
         "description",
