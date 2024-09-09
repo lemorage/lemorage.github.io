@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Homepage</title>
   <link rel="stylesheet" href="/static/style.css">
+  <link rel="preload" href="{{ avatar_url }}" as="image">
 </head>
 <body>
   <div class="container">
     <div class="avatar">
       <img src="{{ avatar_url }}" alt="Main Profile Picture" class="front">
-      <img src="{{ hover_avatar_url }}" alt="Virtual Profile Picture" class="back">
+      <img src="{{ hover_avatar_url }}" alt="Virtual Profile Picture" class="back" loading="lazy">
     </div>
       <h1>{{ name }}</h1>
       <p>{{ description | safe }}</p> 
@@ -20,6 +21,12 @@
         <a href="mailto:one.lemorage@gmail.com?subject=Ti%20Amo&body=Hi%20there,%0D%0A%0D%0A">Contact</a>
       </div>
   </div>
+
+  <!-- Footer Section -->
+  <div class="footer-main">
+    Glenn Miao &copy; 2024. All rights reserved.
+  </div>
+
 </body>
 </html>
 
