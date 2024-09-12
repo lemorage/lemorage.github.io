@@ -1,0 +1,56 @@
+[tasks.clean-frontend]
+description = "Clean the generated frontend WASM files"
+command = "bash"
+args = ["-c", "yes | rm -rf static/frontend/*"]
+
+[tasks.install-wasm-target]
+description = "Ensure wasm target is installed"
+command = "rustup"
+args = ["target", "add", "wasm32-unknown-unknown"]
+condition = { files_exist = ["target/wasm32-unknown-unknown"] }
+
+[tasks.build-frontend]
+description = "Build the frontend (WASM)"
+cwd = "frontend"
+command = "cargo"
+args = ["build", "--target", "wasm32-unknown-unknown"]
+dependencies = ["clean-frontend", "install-wasm-target"]
+
+[tasks.install-wasm-bindgen]
+description = "Ensure wasm-bindgen is installed"
+script = [
+    '''
+    if ! command -v wasm-bindgen &> /dev/null
+    then
+        echo "wasm-bindgen not found, installing..."
+        cargo install wasm-bindgen-cli
+    else
+        echo "wasm-bindgen is already installed"
+    fi
+    '''
+]
+
+[tasks.wasm-bindgen]
+description = "Run wasm-bindgen to generate bindings for the web"
+cwd = "frontend"
+command = "wasm-bindgen"
+args = [
+    "--target", "web",
+    "--out-dir", "../static/frontend/",
+    "target/wasm32-unknown-unknown/debug/frontend.wasm"
+]
+dependencies = ["build-frontend", "install-wasm-bindgen"]
+
+[tasks.run-backend]
+description = "Run the backend"
+command = "cargo"
+args = ["run"]
+
+[tasks.build-and-run]
+description = "Build the frontend, generate wasm bindings, and run the backend"
+dependencies = ["wasm-bindgen", "run-backend"]
+
+[tasks.default]
+description = "Build and run the project"
+clear = true
+dependencies = ["build-and-run"]
