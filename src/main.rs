@@ -2,6 +2,18 @@ use actix_files::Files;
 use actix_web::{web, App, HttpResponse, HttpServer, Result};
 use maud::{html, Markup, DOCTYPE};
 
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(move || {
+        App::new()
+            .route("/", web::get().to(index))
+            .service(Files::new("/static", "static"))
+    })
+    .bind("127.0.0.1:7536")?
+    .run()
+    .await
+}
+
 async fn index() -> Result<HttpResponse> {
     let avatar_url =
         "https://gravatar.com/avatar/f596c7140610305ef8414aa73c7a1db3?size=256&cache=1725778928828";
@@ -28,8 +40,11 @@ async fn index() -> Result<HttpResponse> {
                 link rel="icon" type="image/png" sizes="192x192" href="/static/android-chrome-192x192.png";
                 link rel="icon" type="image/png" sizes="512x512" href="/static/android-chrome-512x512.png";
                 link rel="shortcut icon" href="/static/favicon.ico";
+                link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css";
             }
-            body {
+            body class="light" {
+                div id="sycamore-root" {}
+
                 div class="container" {
                     div class="avatar" {
                         img src=(avatar_url) alt="Main Profile Picture" class="front";
@@ -49,22 +64,17 @@ async fn index() -> Result<HttpResponse> {
                     "Glenn Miao " (maud::PreEscaped("&copy;")) " 2024. All rights reserved."
                 }
             }
+
+            (maud::PreEscaped(r#"
+                <script type="module">
+                    import init from '/static/frontend/frontend.js';
+                    init();
+                </script>
+            "#))
         }
     };
 
     Ok(HttpResponse::Ok()
         .content_type("text/html")
         .body(rendered.into_string()))
-}
-
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    HttpServer::new(move || {
-        App::new()
-            .route("/", web::get().to(index))
-            .service(Files::new("/static", "static"))
-    })
-    .bind("127.0.0.1:7536")?
-    .run()
-    .await
 }

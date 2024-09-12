@@ -10,6 +10,21 @@ body {
   align-items: center;
 }
 
+body.light {
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #fff;
+}
+
+body.dark .footer-main {
+  background-color: #121212;
+  color: #aaa;
+}
+
 .container {
   margin-top: 30px;
   display: flex;
@@ -31,6 +46,39 @@ p {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
   margin-bottom: 30px;
+}
+
+/* Button for theme switch */
+.theme-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle-btn i {
+  font-size: 40px;
+  margin-top: -20px;
+  margin-right: -10px;
+  color: #f39c12;
+}
+
+.theme-toggle-btn:focus {
+  outline: none;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+.dark .theme-toggle-btn i {
+  color: #3498db;
 }
 
 /* Avatar images styling */
