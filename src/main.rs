@@ -7,6 +7,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .route("/", web::get().to(index))
+            .route("/about", web::get().to(about))
             .service(Files::new("/static", "static"))
     })
     .bind("127.0.0.1:7536")?
@@ -57,6 +58,8 @@ async fn index() -> Result<HttpResponse> {
                         " | "
                         a href=(portfolio_url) { "Portfolio" }
                         " | "
+                        a href="/about" { "About Me" }
+                        " | "
                         a href="mailto:one.lemorage@gmail.com?subject=Ti%20Amo&body=Hi%20there,%0D%0A%0D%0A" { "Contact" }
                     }
                 }
@@ -71,6 +74,36 @@ async fn index() -> Result<HttpResponse> {
                     init();
                 </script>
             "#))
+        }
+    };
+
+    Ok(HttpResponse::Ok()
+        .content_type("text/html")
+        .body(rendered.into_string()))
+}
+
+async fn about() -> Result<HttpResponse> {
+    let bio = "Glenn Miao is a developer specializing in RAG Agents...";
+
+    let rendered: Markup = html! {
+        (DOCTYPE)
+        html lang="en" {
+            head {
+                meta charset="UTF-8";
+                meta name="viewport" content="width=device-width, initial-scale=1.0";
+                title { "About Me | Glenn Miao" }
+                link rel="stylesheet" href="/static/style.css";
+            }
+            body class="light" {
+                div class="container" {
+                    h1 { "About Me" }
+                    p { (bio) }
+                    a href="/" { "Back to Home" }
+                }
+                div class="footer-main" {
+                    "Glenn Miao " (maud::PreEscaped("&copy;")) " 2024. All rights reserved."
+                }
+            }
         }
     };
 
