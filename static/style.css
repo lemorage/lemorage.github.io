@@ -48,6 +48,50 @@ p {
   margin-bottom: 30px;
 }
 
+/* Header styles */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* Style for the separators */
+.nav-separator {
+    font-size: 15px;
+    color: #333;
+    margin: 0 30px;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 50px;
+}
+
+nav a {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+  margin-left: 20px;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+nav a:active {
+  color: #0056b3;
+}
+
 /* Button for theme switch */
 .theme-toggle-btn {
   position: fixed;

@@ -1,6 +1,6 @@
 use crate::components;
 use actix_web::{HttpResponse, Result};
-use components::{footer, meta_tags};
+use components::{footer, header, meta_tags};
 use maud::{html, Markup, DOCTYPE};
 
 pub async fn about() -> Result<HttpResponse> {
@@ -16,6 +16,7 @@ pub async fn about() -> Result<HttpResponse> {
                 (meta_tags::meta_tags())
             }
             body class="light" {
+                (header::header("about"))
                 div id="sycamore-root" {}
                 div class="container" {
                     h1 { "About Me" }
