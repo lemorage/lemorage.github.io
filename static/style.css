@@ -54,24 +54,42 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 10px 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 33px 10px 27px 10px;
+  background-image: linear-gradient(to right, 
+    #34495e 12.5%, 
+    #9b59b6 12.5%, 
+    #9b59b6 25%, 
+    #3498db 25%, 
+    #3498db 37.5%, 
+    #62cb31 37.5%, 
+    #62cb31 50%, 
+    #ffb606 50%, 
+    #ffb606 62.5%, 
+    #e67e22 62.5%, 
+    #e67e22 75%, 
+    #e74c3c 75%, 
+    #e74c3c 87.5%, 
+    #c0392b 87.5%, 
+    #c0392b 100%);
+  background-size: 100% 6px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid #E4E5E7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 33px;
+  padding-bottom: 27px;
+  overflow: auto;
   z-index: 100;
 }
 
-/* Style for the separators */
-.nav-separator {
-    font-size: 15px;
-    color: #333;
-    margin: 0 30px;
-}
-
+/* Style for the navigation links */
 nav {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-right: 50px;
+  justify-content: space-evenly;
+  flex-basis: 70%;
+  flex-grow: 1;
+  max-width: 18%;
 }
 
 nav a {
@@ -80,7 +98,7 @@ nav a {
   font-weight: 500;
   color: #333;
   text-decoration: none;
-  margin-left: 20px;
+  padding: 0 15px;
   transition: color 0.3s ease;
 }
 
