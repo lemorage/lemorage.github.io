@@ -27,7 +27,7 @@ pub async fn about() -> Result<HttpResponse> {
             }
             (maud::PreEscaped(r#"
                 <script type="module">
-                    import init from '/static/frontend/frontend.js';
+                    import init from '/static/frontend/wasm_frontend.js';
                     init();
                 </script>
             "#))
