@@ -55,8 +55,8 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
 
         let is_light_theme = document.body().unwrap().class_list().contains("light");
         if is_light_theme {
-            theme_icon.set_class_name("fas fa-lightbulb");
-            web_sys::console::log_1(&"Icon updated to lightbulb.".into());
+            theme_icon.set_class_name("fas fa-sun");
+            web_sys::console::log_1(&"Icon updated to sun.".into());
         } else {
             theme_icon.set_class_name("fas fa-moon");
             web_sys::console::log_1(&"Icon updated to moon.".into());
@@ -64,8 +64,8 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
     }
 
     view! { cx,
-        button(class="theme-toggle-btn", on:click=toggle_theme, style="padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; position: fixed; top: 20px; right: 20px; z-index: 1000; background: transparent; border: none;") {
-            i(id="theme-icon", class="fas fa-lightbulb") {}
+        button(class="theme-toggle-btn", on:click=toggle_theme, style="padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; position: fixed; top: 20px; left: 20px; z-index: 1000; background: transparent; border: none;") {
+            i(id="theme-icon", class="fas fa-sun") {}
         }
     }
 }
