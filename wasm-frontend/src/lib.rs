@@ -64,7 +64,7 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
     }
 
     view! { cx,
-        button(class="theme-toggle-btn", on:click=toggle_theme, style="padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; position: fixed; top: 20px; left: 20px; z-index: 1000; background: transparent; border: none;") {
+        button(class="theme-toggle-btn", on:click=toggle_theme, style="padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; position: fixed; top: 18px; left: 16px; z-index: 1000; background: transparent; border: none;") {
             i(id="theme-icon", class="fas fa-sun") {}
         }
     }

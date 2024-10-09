@@ -22,6 +22,22 @@ body.dark {
   color: #fff;
 }
 
+body.dark header {
+  background-color: #121212;
+}
+
+body.dark .nav-container {
+  background-color: #121212;
+}
+
+body.dark .nav-links a {
+  color: #ddd;
+}
+
+body.dark .nav-links a:hover {
+  color: #f39c12;
+}
+
 body.dark .footer-main {
   background-color: #121212;
   color: #aaa;
@@ -103,8 +119,9 @@ header {
 .nav-container {
   display: flex;
   justify-content: flex-end;
-  padding: 10px 20px;
+  padding: 29px 25px;
   background-color: #f8f8f8;
+  font-size: 20px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -124,7 +141,7 @@ header {
 
 .nav-links a {
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   color: #333;
   text-decoration: none;
