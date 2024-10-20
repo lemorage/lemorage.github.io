@@ -41,7 +41,7 @@ pub async fn index() -> Result<HttpResponse> {
                         " | "
                         a href=(portfolio_url) { "Portfolio" }
                         " | "
-                        a href="mailto:one.lemorage@gmail.com?subject=Ti%20Amo&body=Hi%20there,%0D%0A%0D%0A" { "Contact" }
+                        a href="#" onclick="confirmContact();" { "Contact" }
                     }
                 }
                 (footer::footer())
@@ -51,6 +51,13 @@ pub async fn index() -> Result<HttpResponse> {
                 <script type="module">
                     import init from '/static/frontend/wasm_frontend.js';
                     init();
+                </script>
+                <script>
+                    function confirmContact() {
+                        if (confirm("Do you want to send an email?")) {
+                            window.location.href = "mailto:one.lemorage@gmail.com?subject=Ti%20Amo&body=Hi%20there,%0D%0A%0D%0A";
+                        }
+                    }
                 </script>
             "#))
         }
