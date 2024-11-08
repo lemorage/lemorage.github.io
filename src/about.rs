@@ -28,26 +28,6 @@ Glenn is a staunch advocate of **equal contribution** and **open source**, princ
                 meta name="viewport" content="width=device-width, initial-scale=1.0";
                 title { "About Me | Glenn Miao" }
                 (meta_tags::meta_tags())
-                style {
-                    (maud::PreEscaped(r#"
-                        .bio-container {
-                            max-width: 730px;
-                            margin: 0 auto;
-                            padding: 1em;
-                            line-height: 1.6;
-                            color: #3a506b;
-                        }
-
-                        .bio-container p {
-                            font-size: 18px;
-                            color: #4a4e69;
-                            font-style: normal;
-                            font-family: 'Georgia', serif;
-                            font-weight: 400;
-                            margin-bottom: 20px;
-                        }
-                    "#))
-                }
             }
             body class="light" {
                 (header::header("about"))
