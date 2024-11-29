@@ -312,3 +312,60 @@ header {
   border-top: 1px solid #ededed;
   margin: 0 auto;
 }
+
+/* 404 Page Styling */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+  color: #333;
+  text-align: center;
+}
+
+.not-found-container h1 {
+  font-size: 80px;
+  font-weight: 800;
+  color: #24292e;
+  margin-bottom: 20px;
+}
+
+.not-found-container p {
+  font-size: 20px;
+  color: #586069;
+  margin-bottom: 40px;
+}
+
+.not-found-container a {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #0366d6;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.not-found-container a:hover {
+  background-color: #005cc5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .not-found-container h1 {
+    font-size: 60px;
+  }
+
+  .not-found-container p {
+    font-size: 18px;
+  }
+
+  .not-found-container a {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

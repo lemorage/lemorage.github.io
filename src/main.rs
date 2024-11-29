@@ -1,5 +1,6 @@
 mod about;
 mod components;
+mod errors;
 mod home;
 
 use actix_files::Files;
@@ -12,6 +13,7 @@ async fn main() -> std::io::Result<()> {
             .route("/", web::get().to(home::index))
             .route("/about", web::get().to(about::about))
             .service(Files::new("/static", "static"))
+            .default_service(web::route().to(errors::not_found))
     })
     .bind("0.0.0.0:7536")?
     .run()
