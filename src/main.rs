@@ -13,7 +13,7 @@ async fn main() -> std::io::Result<()> {
             .route("/about", web::get().to(about::about))
             .service(Files::new("/static", "static"))
     })
-    .bind("127.0.0.1:7536")?
+    .bind("0.0.0.0:7536")?
     .run()
     .await
 }

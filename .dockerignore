@@ -1,0 +1,7 @@
+fly.toml
+.git/
+target/
+wasm-frontend/target/
+
+*.log
+*.tmp
