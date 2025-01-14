@@ -7,6 +7,8 @@ use web_sys::{window, Document, Element};
 pub fn start() {
     web_sys::console::log_1(&"Wasm and Sycamore app starting...".into());
 
+    apply_theme_from_local_storage();
+
     let document = window().unwrap().document().unwrap();
     if let Some(root_element) = document.get_element_by_id("sycamore-root") {
         sycamore::render_to(
@@ -27,7 +29,7 @@ pub fn start() {
 // Define the ThemeSwitcher component
 #[component]
 fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
-    let is_dark = create_signal(cx, false);
+    let is_dark = create_signal(cx, load_theme_from_local_storage());
 
     // Toggle theme logic that modifies body class
     let toggle_theme = move |_| {
@@ -39,9 +41,11 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
         if *is_dark.get() {
             web_sys::console::log_1(&"Switching to light theme.".into());
             body.set_class_name("light");
+            save_theme_to_local_storage(false);
         } else {
             web_sys::console::log_1(&"Switching to dark theme.".into());
             body.set_class_name("dark");
+            save_theme_to_local_storage(true);
         }
         is_dark.set(!*is_dark.get());
 
@@ -67,5 +71,34 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
         button(class="theme-toggle-btn", on:click=toggle_theme, style="padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; position: fixed; top: 18px; left: 16px; z-index: 1000; background: transparent; border: none;") {
             i(id="theme-icon", class="fas fa-sun") {}
         }
+    }
+}
+
+// Helper function to apply the theme from local storage
+fn apply_theme_from_local_storage() {
+    if let Some(storage) = window().unwrap().local_storage().unwrap() {
+        if let Ok(Some(theme)) = storage.get_item("theme") {
+            let document = window().unwrap().document().unwrap();
+            let body = document.body().unwrap();
+            body.set_class_name(&theme);
+        }
+    }
+}
+
+// Helper function to load the theme from local storage
+fn load_theme_from_local_storage() -> bool {
+    if let Some(storage) = window().unwrap().local_storage().unwrap() {
+        if let Ok(Some(theme)) = storage.get_item("theme") {
+            return theme == "dark";
+        }
+    }
+    false
+}
+
+// Helper function to save the theme in local storage
+fn save_theme_to_local_storage(is_dark: bool) {
+    if let Some(storage) = window().unwrap().local_storage().unwrap() {
+        let theme = if is_dark { "dark" } else { "light" };
+        storage.set_item("theme", theme).unwrap();
     }
 }
