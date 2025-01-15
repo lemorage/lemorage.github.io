@@ -7,8 +7,6 @@ use web_sys::{window, Document, Element};
 pub fn start() {
     web_sys::console::log_1(&"Wasm and Sycamore app starting...".into());
 
-    apply_theme_from_local_storage();
-
     let document = window().unwrap().document().unwrap();
     if let Some(root_element) = document.get_element_by_id("sycamore-root") {
         sycamore::render_to(
@@ -29,7 +27,7 @@ pub fn start() {
 // Define the ThemeSwitcher component
 #[component]
 fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
-    let is_dark = create_signal(cx, load_theme_from_local_storage());
+    let is_dark = create_signal(cx, load_and_apply_theme());
 
     // Toggle theme logic that modifies body class
     let toggle_theme = move |_| {
@@ -74,21 +72,13 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
     }
 }
 
-// Helper function to apply the theme from local storage
-fn apply_theme_from_local_storage() {
+// Helper function to load the theme from local storage and apply it
+pub fn load_and_apply_theme() -> bool {
     if let Some(storage) = window().unwrap().local_storage().unwrap() {
         if let Ok(Some(theme)) = storage.get_item("theme") {
             let document = window().unwrap().document().unwrap();
             let body = document.body().unwrap();
             body.set_class_name(&theme);
-        }
-    }
-}
-
-// Helper function to load the theme from local storage
-fn load_theme_from_local_storage() -> bool {
-    if let Some(storage) = window().unwrap().local_storage().unwrap() {
-        if let Ok(Some(theme)) = storage.get_item("theme") {
             return theme == "dark";
         }
     }
