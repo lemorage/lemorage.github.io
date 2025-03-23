@@ -11,8 +11,8 @@ pub async fn index() -> Result<HttpResponse> {
     let name = "Glenn Miao";
     let description =
         "Building RAG Agents<br>Previously @SUSTech<br>Founding AI Engineer of @Wondervoy";
-    let blog_url = "#";
-    let portfolio_url = "#";
+    let blog_url = "https://lemorage.gitlab.io/lemorage-blog";
+    let portfolio_url = "https://github.com/lemorage";
 
     let rendered: Markup = html! {
         (DOCTYPE)

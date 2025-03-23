@@ -15,10 +15,10 @@ pub fn header(current_page: &str) -> Markup {
                                 li { a href="/about" { "About" } }
                             }
                             @if current_page != "portfolio" {
-                                li { a href="/portfolio" { "Portfolio" } }
+                                li { a href="https://github.com/lemorage" target="_blank" rel="noopener noreferrer" { "Portfolio" } }
                             }
                             @if current_page != "blog" {
-                                li { a href="/blog" { "Blog" } }
+                                li { a href="https://lemorage.gitlab.io/lemorage-blog" target="_blank" rel="noopener noreferrer" { "Blog" } }
                             }
                         }
                     }
