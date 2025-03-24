@@ -1,6 +1,6 @@
 # ✨lemorage.github.io✨
 
-This repository contains the source code for my personal website, built entirely in **pure Rust**.
+This repository contains the source code for my personal website, built entirely in **pure Rust**. The blog site is built in [hugo](https://gohugo.io/), please refer to my another [repo](https://gitlab.com/lemorage/lemorage-blog) for more details.
 
 ## Installation Guide
 
