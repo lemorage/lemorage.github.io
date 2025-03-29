@@ -6,7 +6,7 @@ use pulldown_cmark::{html as md_to_html, Options, Parser};
 
 pub async fn about() -> Result<HttpResponse> {
     let bio_md = r#"
-Glenn Miao is a developer specializing in **LLM Agents** and **RAG pipelines**, with extensive experience in Web Development, and AI integration. Currently, Glenn works for an startup -- [Wondervoy](https://wondervoy.com), focusing on **LLM agents** and leveraging prior experiences in **database systems** to build scalable RAG pipelines for business applications.
+Glenn Miao is a developer specializing in **LLM Agents** and **RAG pipelines**, with experience in Web Development, and AI integration. Currently, Glenn works for an startup -- [Wondervoy](https://wondervoy.com), focusing on **LLM agents** and leveraging prior experiences in **database systems** to build scalable RAG pipelines for business applications.
 
 While Glenn primarily codes in **TypeScript** and **Python**, he has a particular fondness for **functional programming paradigms** and a strong interest in **Rust**.
 
@@ -28,16 +28,34 @@ Glenn is a staunch advocate of **equal contribution** and **open source**, princ
                 meta name="viewport" content="width=device-width, initial-scale=1.0";
                 title { "About Me | Glenn Miao" }
                 (meta_tags::meta_tags())
+                link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer";
             }
             body class="light" {
                 (header::header("about"))
                 div id="sycamore-root" {}
-                div class="container" {
-                    h1 { "About Me" }
-                    div class="bio-container" {
-                        (PreEscaped(bio_html))
+
+                main class="cyber-grid" {
+                    section class="intro-pod" {
+                        div class="avatar-pod" {
+                            div class="pixel-avatar" {
+                                img src="./static/pixel-me.png" alt="Glenn Miao" class="back";
+                            }
+                            h1 class="neon-title" data-text="Glenn Miao" { "Glenn Miao" }
+                        }
+                    }
+                    section class="bio-pod" {
+                        div class="bio-core pixel-card" {
+                            (PreEscaped(bio_html))
+                        }
+                    }
+                    section class="link-pod" {
+                        ul class="cyber-links" {
+                            li { a href="https://github.com/lemorage" target="_blank" { i class="fab fa-github cyber-icon" {} } }
+                            li { a href="https://x.com/LemorageOne" target="_blank" { i class="fab fa-x-twitter cyber-icon" {} } }
+                        }
                     }
                 }
+
                 (footer::footer())
             }
             (maud::PreEscaped(r#"
