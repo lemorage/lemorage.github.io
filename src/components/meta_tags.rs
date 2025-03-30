@@ -9,6 +9,6 @@ pub fn meta_tags() -> Markup {
         link rel="icon" type="image/png" sizes="512x512" href="/static/android-chrome-512x512.png";
         link rel="shortcut icon" href="/static/favicon.ico";
         link rel="stylesheet" href="/static/style.css";
-        link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css";
+        link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer";
     }
 }
