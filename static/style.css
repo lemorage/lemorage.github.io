@@ -250,27 +250,42 @@ body.light .bio-core {
     linear-gradient(#ff007a, #ff007a) 20% 30% / 40px 40px,
     linear-gradient(45deg, #00ffff 50%, transparent 50%) 50% 50% / 50px 50px,
     radial-gradient(circle, #ffcc00 50%, transparent 50%) 80% 70% / 60px 60px,
-    linear-gradient(135deg, #00ff00 25%, transparent 25%) 10% 80% / 70px 70px;
+    linear-gradient(135deg, #00ff00 25%, transparent 25%) 10% 80% / 70px 70px,
+    linear-gradient(to right, #00bfff 50%, transparent 50%) 30% 10% / 50px 50px,
+    linear-gradient(108deg, transparent 33%, #daa0d6 33%, #da70d6 66%, transparent 66%) 60% 20% / 40px 40px,
+    linear-gradient(72deg, transparent 33%, #daa0d6 33%, #da70d6 66%, transparent 66%) 60% 20% / 40px 40px,
+    linear-gradient(to right, #ffff00 50%, transparent 50%) 40% 60% / 55px 30px;
   background-repeat: no-repeat;
-  opacity: 0.7;
-  animation: floatShapes 15s ease-in-out infinite;
+  opacity: 0.6;
+  animation: floatShapes 15s ease-in-out infinite alternate;
 }
 
 /* Floating Animation */
 @keyframes floatShapes {
   0% {
     transform: translateY(0px) scale(1);
-    opacity: 0.8;
+    opacity: 0.6;
   }
 
   50% {
-    transform: translateY(-10px) scale(1.1);
+    transform: translateY(-30px) scale(1.2);
     opacity: 1;
   }
 
   100% {
     transform: translateY(0px) scale(1);
-    opacity: 0.8;
+    opacity: 0.6;
+  }
+}
+
+/* Rotation Animation for more dynamic movement */
+@keyframes rotateShapes {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
 
