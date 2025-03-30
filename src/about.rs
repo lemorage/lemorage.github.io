@@ -29,7 +29,7 @@ Glenn is a staunch advocate of **equal contribution** and **open source**, princ
                 title { "About Me | Glenn Miao" }
                 (meta_tags::meta_tags())
             }
-            body class="light" {
+            body class="light" data-page="about" {
                 (header::header("about"))
                 div id="sycamore-root" {}
 
