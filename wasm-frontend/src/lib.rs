@@ -3,6 +3,7 @@ use wasm_bindgen::prelude::*;
 use web_sys::{window, Document, Element};
 
 // Initialize the Sycamore app and inject it into the HTML document
+#[cfg_attr(not(target_arch = "wasm32"), allow(unexpected_cfgs))]
 #[wasm_bindgen(start)]
 pub fn start() {
     web_sys::console::log_1(&"Wasm and Sycamore app starting...".into());
