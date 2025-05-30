@@ -6,11 +6,19 @@ use pulldown_cmark::{html as md_to_html, Options, Parser};
 
 pub async fn about() -> Result<HttpResponse> {
     let bio_md = r#"
-Glenn Miao is a developer specializing in **LLM Agents** and **RAG pipelines**, with experience in Web Development, and AI integration. Currently, Glenn works for an startup -- [Wondervoy](https://wondervoy.com), focusing on **LLM agents** and leveraging prior experiences in **database systems** to build scalable RAG pipelines for business applications.
+Hi there! I’m Glenn Miao. Acknowledging the fact that, to fully describe a human is a bit of a complex task, I'll mention my experiences and interests specifically below.
 
-While Glenn primarily codes in **TypeScript** and **Python**, he has a particular fondness for **functional programming paradigms** and a strong interest in **Rust**.
+I studied archaeology in my undergraduate years and worked as a field crew member before.
 
-Glenn is a staunch advocate of **equal contribution** and **open source**, principles that guide his life. He firmly believes in the potential of open-source software and open research.
+Over time, my interest in software development grew, and I transitioned into a formal developer role. I worked as a Database TA and also worked at a startup in Japan, focusing on LLM (RAG) Agents and Web Development before.
+
+I work a lot in **TypeScript** and **Python**, and write **Rust** as well outside of my work.
+
+I’m deeply interested in functional programming and type systems. I have studied several languages in that paradigm, including Scheme, SML, and others (Haskell and OCaml are still on the list!). Besides, I’m fascinated by databases—especially in areas like OLAP, lakehouse architectures, and stream processing.
+
+Outside of tech, I’m passionate about music, especially jazz lately. I’ve dabbled in a number of instruments over the years—drums, keyboards, guitar, trumpet, and more.
+
+I believe in the concept of **equal contribution** and **open source**, and I spend most of my time these days engaging with **OSS** community.
     "#;
 
     // Parse the Markdown content and render to HTML

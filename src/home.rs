@@ -10,7 +10,7 @@ pub async fn index() -> Result<HttpResponse> {
         "https://gravatar.com/userimage/215159183/321f49eca2a5a689000be949787e1e45.jpeg?size=256";
     let name = "Glenn Miao";
     let description =
-        "Building RAG Agents<br>Previously @SUSTech<br>Founding AI Engineer of @Wondervoy";
+        "Building Data Infra<br>Open Source Developer<br>Previously Founding AI Engineer of @Wondervoy";
     let blog_url = "https://lemorage.gitlab.io/lemorage-blog";
     let portfolio_url = "https://github.com/lemorage";
 
