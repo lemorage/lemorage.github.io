@@ -294,11 +294,19 @@ body.light .bio-core {
   z-index: 2;
   color: #fff;
   text-shadow: 0 0 5px #00ffff, 0 0 10px #ff007a;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  text-shadow: 0.5px 0.5px 1px #000, 0 0 5px #00ffff, 0 0 10px #ff007a;
 }
 
 body.light .bio-core p {
-  color: #2d3748;
+  color: #1a202c;
   text-shadow: none;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #888;
+  -webkit-text-stroke: 0.5px #666;
 }
 
 /* Animations */
