@@ -9,8 +9,21 @@ pub async fn index() -> Result<HttpResponse> {
     let hover_avatar_url =
         "https://gravatar.com/userimage/215159183/321f49eca2a5a689000be949787e1e45.jpeg?size=256";
     let name = "Glenn Miao";
-    let description =
-        "Building Data Infra<br>Open Source Developer<br>Previously Founding AI Engineer of @Wondervoy";
+    let description: Markup = html! {
+        span {
+            "Dev @ "
+            a href="https://try.flowith.io/" target="_blank" rel="noopener noreferrer" {
+                "Flowith AI"
+            }
+            br;
+            "Open Source Developer"
+            br;
+            "Previously Founding Software Engineer at "
+            a href="https://wondervoy.com/" target="_blank" rel="noopener noreferrer" {
+                "Wondervoy"
+            }
+        }
+    };
     let blog_url = "https://lemorage.gitlab.io/lemorage-blog";
     let portfolio_url = "https://github.com/lemorage";
 
@@ -33,7 +46,7 @@ pub async fn index() -> Result<HttpResponse> {
                         img src=(hover_avatar_url) alt="Virtual Profile Picture" class="back" loading="lazy";
                     }
                     h1 { (name) }
-                    p { (maud::PreEscaped(description)) }
+                    p { (description) }
                     div class="links" {
                         a href="/about" { "About" }
                         " | "

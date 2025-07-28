@@ -18,7 +18,7 @@ I’m deeply interested in functional programming and type systems. I have studi
 
 Outside of tech, I’m passionate about music, especially jazz lately. I’ve dabbled in a number of instruments over the years—drums, keyboards, guitar, trumpet, and more.
 
-I believe in the concept of **equal contribution** and **open source**, and I spend most of my time these days engaging with **OSS** community.
+I believe in the concept of **equal contribution** and **open source**, and I spend plenty of my time these days engaging with **OSS** community.
     "#;
 
     // Parse the Markdown content and render to HTML

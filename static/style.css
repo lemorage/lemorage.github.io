@@ -70,6 +70,19 @@ p {
   margin-bottom: 30px;
 }
 
+p a {
+  color: #8aa5cc;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(138, 165, 204, 0.4);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+p a:hover {
+  color: #a0c0f0;
+  border-bottom-color: rgba(160, 192, 240, 0.6);
+  text-decoration: underline;
+}
+
 /* Adjust for fixed header/footer */
 header {
   position: fixed;
