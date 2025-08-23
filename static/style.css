@@ -1,3 +1,16 @@
+/* CSS Custom Properties for reuse */
+:root {
+  --primary-cyan: #00ffff;
+  --primary-pink: #ff007a;
+  --primary-purple: #ff00ff;
+  --neon-blue: #00bfff;
+  --dark-bg: #1a202c;
+  --light-bg: #f5f7fa;
+  --dark-text: #e2e8f0;
+  --light-text: #2d3748;
+  --accent-orange: #f39c12;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   text-align: center;
@@ -17,21 +30,21 @@ body {
 }
 
 body.light {
-  background-color: #f5f7fa;
-  color: #2d3748;
+  background-color: var(--light-bg);
+  color: var(--light-text);
 }
 
 body.dark {
-  background-color: #1a202c;
-  color: #e2e8f0;
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
 }
 
 body.dark header {
-  background-color: #1a202c;
+  background-color: var(--dark-bg);
 }
 
 body.dark .nav-container {
-  background-color: #1a202c;
+  background-color: var(--dark-bg);
 }
 
 body.dark .nav-links a {
@@ -39,11 +52,11 @@ body.dark .nav-links a {
 }
 
 body.dark .nav-links a:hover {
-  color: #f39c12;
+  color: var(--accent-orange);
 }
 
 body.dark .footer-main {
-  background-color: #1a202c;
+  background-color: var(--dark-bg);
   color: #aaa;
 }
 
@@ -124,9 +137,9 @@ header {
   align-items: center;
   justify-content: center;
   padding: 30px;
-  background: #ff007a;
+  background: var(--primary-pink);
   border: 6px solid #000;
-  box-shadow: 0 0 20px #ff00ff;
+  box-shadow: 0 0 20px var(--primary-purple);
   position: relative;
 }
 
@@ -176,7 +189,7 @@ header {
   font-family: 'Press Start 2P', cursive;
   font-size: 36px;
   color: #fff;
-  text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+  text-shadow: 0 0 10px var(--primary-cyan), 0 0 20px var(--primary-purple);
   animation: neonFlicker 3s infinite;
   margin-top: 20px;
 }
@@ -271,24 +284,6 @@ body.light .bio-core {
   background-repeat: no-repeat;
   opacity: 0.6;
   animation: floatShapes 15s ease-in-out infinite alternate;
-}
-
-/* Floating Animation */
-@keyframes floatShapes {
-  0% {
-    transform: translateY(0px) scale(1);
-    opacity: 0.6;
-  }
-
-  50% {
-    transform: translateY(-30px) scale(1.2);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(0px) scale(1);
-    opacity: 0.6;
-  }
 }
 
 /* Rotation Animation for more dynamic movement */

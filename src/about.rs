@@ -1,4 +1,5 @@
 use crate::components;
+use crate::config::Config;
 use actix_web::{HttpResponse, Result};
 use components::{footer, header, meta_tags};
 use maud::{html, Markup, PreEscaped, DOCTYPE};
@@ -57,8 +58,8 @@ I believe in the concept of **equal contribution** and **open source**, and I sp
                     }
                     section class="link-pod" {
                         ul class="cyber-links" {
-                            li { a href="https://github.com/lemorage" target="_blank" { i class="fab fa-github cyber-icon" {} } }
-                            li { a href="https://x.com/LemorageOne" target="_blank" { i class="fab fa-x-twitter cyber-icon" {} } }
+                            li { a href=(Config::GITHUB_URL) target="_blank" { i class="fab fa-github cyber-icon" {} } }
+                            li { a href=(Config::TWITTER_URL) target="_blank" { i class="fab fa-x-twitter cyber-icon" {} } }
                         }
                     }
                 }

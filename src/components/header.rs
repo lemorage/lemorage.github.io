@@ -1,3 +1,4 @@
+use crate::config::Config;
 use maud::{html, Markup};
 
 pub fn header(current_page: &str) -> Markup {
@@ -15,10 +16,10 @@ pub fn header(current_page: &str) -> Markup {
                                 li { a href="/about" { "About" } }
                             }
                             @if current_page != "portfolio" {
-                                li { a href="https://github.com/lemorage" target="_blank" rel="noopener noreferrer" { "Portfolio" } }
+                                li { a href=(Config::GITHUB_URL) target="_blank" rel="noopener noreferrer" { "Portfolio" } }
                             }
                             @if current_page != "blog" {
-                                li { a href="https://lemorage.gitlab.io/lemorage-blog" target="_blank" rel="noopener noreferrer" { "Blog" } }
+                                li { a href=(Config::BLOG_URL) target="_blank" rel="noopener noreferrer" { "Blog" } }
                             }
                         }
                     }

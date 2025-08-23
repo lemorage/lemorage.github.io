@@ -1,5 +1,6 @@
 mod about;
 mod components;
+mod config;
 mod errors;
 mod home;
 

@@ -32,22 +32,15 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
 
     // Toggle theme logic that modifies body class
     let toggle_theme = move |_| {
-        web_sys::console::log_1(&"Theme toggle button clicked.".into());
-
         let document: Document = window().unwrap().document().unwrap();
         let body: Element = document.body().unwrap().into();
 
-        if *is_dark.get() {
-            web_sys::console::log_1(&"Switching to light theme.".into());
-            body.set_class_name("light");
-            save_theme_to_local_storage(false);
-        } else {
-            web_sys::console::log_1(&"Switching to dark theme.".into());
-            body.set_class_name("dark");
-            save_theme_to_local_storage(true);
-        }
-        is_dark.set(!*is_dark.get());
-
+        let new_is_dark = !*is_dark.get();
+        let theme_class = if new_is_dark { "dark" } else { "light" };
+        
+        body.set_class_name(theme_class);
+        save_theme_to_local_storage(new_is_dark);
+        is_dark.set(new_is_dark);
         update_icon();
     };
 
@@ -55,15 +48,9 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
     fn update_icon() {
         let document = window().unwrap().document().unwrap();
         let theme_icon = document.get_element_by_id("theme-icon").unwrap();
-
-        let is_light_theme = document.body().unwrap().class_list().contains("light");
-        if is_light_theme {
-            theme_icon.set_class_name("fas fa-sun");
-            web_sys::console::log_1(&"Icon updated to sun.".into());
-        } else {
-            theme_icon.set_class_name("fas fa-moon");
-            web_sys::console::log_1(&"Icon updated to moon.".into());
-        }
+        let is_dark = document.body().unwrap().class_list().contains("dark");
+        
+        theme_icon.set_class_name(if is_dark { "fas fa-moon" } else { "fas fa-sun" });
     }
 
     view! { cx,
@@ -78,24 +65,19 @@ pub fn load_and_apply_theme() -> bool {
     let document = window().unwrap().document().unwrap();
     let body = document.body().unwrap();
     let is_about_page = body.get_attribute("data-page").map_or(false, |val| val == "about");
+    let theme_key = if is_about_page { "about-theme" } else { "theme" };
 
     // Check page-specific local storage
     if let Some(storage) = window().unwrap().local_storage().unwrap() {
-        let theme_key = if is_about_page { "about-theme" } else { "theme" };
         if let Ok(Some(theme)) = storage.get_item(theme_key) {
             body.set_class_name(&theme);
             return theme == "dark";
         }
     }
 
-    // Default to dark for About page, light for others
-    let is_dark = if is_about_page {
-        body.set_class_name("dark");
-        true
-    } else {
-        body.set_class_name("light");
-        false
-    };
+    // Default: dark for About page, light for others
+    let (theme_class, is_dark) = if is_about_page { ("dark", true) } else { ("light", false) };
+    body.set_class_name(theme_class);
     is_dark
 }
 
