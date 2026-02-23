@@ -7,7 +7,16 @@ edition = "2021"
 js-sys = "0.3"
 sycamore = "0.8"
 wasm-bindgen = "=0.2.93"
-web-sys = { version = "0.3", features = ["Window", "Document", "Element", "Storage"] }
+wasm-bindgen-futures = "0.4"
+web-sys = { version = "0.3", features = [
+    "Window",
+    "Document",
+    "Element",
+    "Storage",
+    "MouseEvent",
+    "HtmlElement",
+    "CssStyleDeclaration",
+] }
 
 [lib]
 crate-type = ["cdylib"]

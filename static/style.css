@@ -9,6 +9,41 @@
   --dark-text: #e2e8f0;
   --light-text: #2d3748;
   --accent-orange: #f39c12;
+
+  /* Ripple effect variables */
+  --ripple-x: 50vw;
+  --ripple-y: 50vh;
+  --ripple-end-radius: 100vmax;
+}
+
+/* View transition for theme ripple effect */
+html {
+  view-transition-name: page-root;
+}
+
+/* Disable default view transition animations */
+::view-transition-old(page-root) {
+  animation: none;
+}
+
+/* Circular clip-path reveal from click position */
+::view-transition-new(page-root) {
+  animation: theme-ripple-reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes theme-ripple-reveal {
+  from {
+    clip-path: circle(0px at var(--ripple-x) var(--ripple-y));
+  }
+  to {
+    clip-path: circle(var(--ripple-end-radius) at var(--ripple-x) var(--ripple-y));
+  }
+}
+
+/* Fallback transition for browsers without View Transitions API */
+.theme-transitioning,
+.theme-transitioning * {
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease !important;
 }
 
 body {

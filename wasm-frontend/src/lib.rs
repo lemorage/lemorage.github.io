@@ -1,6 +1,22 @@
 use sycamore::prelude::*;
 use wasm_bindgen::prelude::*;
-use web_sys::{window, Document, Element};
+use web_sys::{window, Document, Element, HtmlElement, MouseEvent};
+
+/// Check if View Transitions API is supported and call startViewTransition
+fn try_start_view_transition(document: &Document, callback: &js_sys::Function) -> bool {
+    // Check if startViewTransition exists on document
+    let start_fn = js_sys::Reflect::get(document, &JsValue::from_str("startViewTransition"))
+        .unwrap_or(JsValue::UNDEFINED);
+
+    if start_fn.is_function() {
+        // Call document.startViewTransition(callback)
+        let func: js_sys::Function = start_fn.unchecked_into();
+        let _ = func.call1(document, callback);
+        true
+    } else {
+        false
+    }
+}
 
 // Initialize the Sycamore app and inject it into the HTML document
 #[cfg_attr(not(target_arch = "wasm32"), allow(unexpected_cfgs))]
@@ -30,27 +46,88 @@ pub fn start() {
 fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
     let is_dark = create_signal(cx, load_and_apply_theme());
 
-    // Toggle theme logic that modifies body class
-    let toggle_theme = move |_| {
+    // Toggle theme with ripple effect using View Transitions API
+    let toggle_theme = move |event: web_sys::Event| {
         let document: Document = window().unwrap().document().unwrap();
         let body: Element = document.body().unwrap().into();
-
         let new_is_dark = !*is_dark.get();
         let theme_class = if new_is_dark { "dark" } else { "light" };
-        
-        body.set_class_name(theme_class);
+
+        // Get click position from MouseEvent
+        let (x, y) = if let Ok(mouse_event) = event.dyn_into::<MouseEvent>() {
+            (mouse_event.client_x() as f64, mouse_event.client_y() as f64)
+        } else {
+            // Fallback to center of viewport
+            let win = window().unwrap();
+            (
+                win.inner_width().unwrap().as_f64().unwrap_or(800.0) / 2.0,
+                win.inner_height().unwrap().as_f64().unwrap_or(600.0) / 2.0,
+            )
+        };
+
+        // Calculate end radius to cover entire viewport
+        let win = window().unwrap();
+        let vw = win.inner_width().unwrap().as_f64().unwrap_or(800.0);
+        let vh = win.inner_height().unwrap().as_f64().unwrap_or(600.0);
+        let end_radius = ((x.max(vw - x)).powi(2) + (y.max(vh - y)).powi(2)).sqrt();
+
+        // Set CSS variables for ripple animation
+        if let Some(root) = document.document_element() {
+            if let Ok(html_el) = root.dyn_into::<HtmlElement>() {
+                let style = html_el.style();
+                let _ = style.set_property("--ripple-x", &format!("{}px", x));
+                let _ = style.set_property("--ripple-y", &format!("{}px", y));
+                let _ = style.set_property("--ripple-end-radius", &format!("{}px", end_radius));
+            }
+        }
+
+        // Try to use View Transitions API, fallback to simple transition
+        let theme_class_owned = theme_class.to_string();
+        let update_fn = Closure::once(Box::new(move || {
+            let doc = window().unwrap().document().unwrap();
+            let body: Element = doc.body().unwrap().into();
+            body.set_class_name(&theme_class_owned);
+            update_icon();
+        }) as Box<dyn FnOnce()>);
+
+        if try_start_view_transition(&document, update_fn.as_ref().unchecked_ref()) {
+            // View Transitions API supported - animation will play
+            update_fn.forget();
+        } else {
+            // Fallback: apply theme directly with CSS transition
+            body.set_class_name(theme_class);
+            let root = document.document_element().unwrap();
+            let _ = root.class_list().add_1("theme-transitioning");
+
+            // Remove transitioning class after animation
+            let cleanup = Closure::once(Box::new(move || {
+                let doc = window().unwrap().document().unwrap();
+                if let Some(root) = doc.document_element() {
+                    let _ = root.class_list().remove_1("theme-transitioning");
+                }
+                update_icon();
+            }) as Box<dyn FnOnce()>);
+
+            let _ = window()
+                .unwrap()
+                .set_timeout_with_callback_and_timeout_and_arguments_0(
+                    cleanup.as_ref().unchecked_ref(),
+                    800,
+                );
+            cleanup.forget();
+        }
+
         save_theme_to_local_storage(new_is_dark);
         is_dark.set(new_is_dark);
-        update_icon();
     };
 
     // Function to update the FontAwesome icon based on the current theme
     fn update_icon() {
         let document = window().unwrap().document().unwrap();
-        let theme_icon = document.get_element_by_id("theme-icon").unwrap();
-        let is_dark = document.body().unwrap().class_list().contains("dark");
-        
-        theme_icon.set_class_name(if is_dark { "fas fa-moon" } else { "fas fa-sun" });
+        if let Some(theme_icon) = document.get_element_by_id("theme-icon") {
+            let is_dark = document.body().unwrap().class_list().contains("dark");
+            theme_icon.set_class_name(if is_dark { "fas fa-moon" } else { "fas fa-sun" });
+        }
     }
 
     view! { cx,
@@ -64,8 +141,14 @@ fn ThemeSwitcher<G: Html>(cx: Scope) -> View<G> {
 pub fn load_and_apply_theme() -> bool {
     let document = window().unwrap().document().unwrap();
     let body = document.body().unwrap();
-    let is_about_page = body.get_attribute("data-page").map_or(false, |val| val == "about");
-    let theme_key = if is_about_page { "about-theme" } else { "theme" };
+    let is_about_page = body
+        .get_attribute("data-page")
+        .map_or(false, |val| val == "about");
+    let theme_key = if is_about_page {
+        "about-theme"
+    } else {
+        "theme"
+    };
 
     // Check page-specific local storage
     if let Some(storage) = window().unwrap().local_storage().unwrap() {
@@ -76,7 +159,11 @@ pub fn load_and_apply_theme() -> bool {
     }
 
     // Default: dark for About page, light for others
-    let (theme_class, is_dark) = if is_about_page { ("dark", true) } else { ("light", false) };
+    let (theme_class, is_dark) = if is_about_page {
+        ("dark", true)
+    } else {
+        ("light", false)
+    };
     body.set_class_name(theme_class);
     is_dark
 }
@@ -86,8 +173,14 @@ fn save_theme_to_local_storage(is_dark: bool) {
     if let Some(storage) = window().unwrap().local_storage().unwrap() {
         let document = window().unwrap().document().unwrap();
         let body = document.body().unwrap();
-        let is_about_page = body.get_attribute("data-page").map_or(false, |val| val == "about");
-        let theme_key = if is_about_page { "about-theme" } else { "theme" };
+        let is_about_page = body
+            .get_attribute("data-page")
+            .map_or(false, |val| val == "about");
+        let theme_key = if is_about_page {
+            "about-theme"
+        } else {
+            "theme"
+        };
         let theme = if is_dark { "dark" } else { "light" };
         storage.set_item(theme_key, theme).unwrap();
     }
